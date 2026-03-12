@@ -6,8 +6,8 @@ import time, datetime
 from multiprocessing import Pool
 
 def in_ZZ(Fraction):
-    return Fraction.denominator==1
-
+    return Fraction.denominator==1 
+    
 def verify(tuple,beta,amb_sp):
     if amb_sp=="P3":
         r = tuple[0]
@@ -23,9 +23,9 @@ def verify(tuple,beta,amb_sp):
         d = tuple[2]
         e = tuple[3]
         a = r*(beta**3) + 3*(beta**2)*c + 3*beta*d + e
-        b = r*(beta**2) + 2*beta*c + fr(c**2,2) - d
-        c_result = r*beta - c*d + fr(c**3, 6)
-    return in_ZZ(a) and in_ZZ(b) and in_ZZ(c_result) 
+        b = r*(beta**2) + 2*beta*c + fr(c**2-d,2) 
+        c_result = r*beta + fr(c**3 + 2*e - 3*c*d, 6)
+    return in_ZZ(b) and in_ZZ(c_result) and in_ZZ(a)
 
 def grandverify(list,beta, amb_sp):
     a = len(list)
@@ -98,7 +98,8 @@ class Sheaf:
                             solutions.append((rank1,rank2,truec,trued,truee))
         elif self.amb_sp=="Ab3": 
             solutions = []
-            for d in range(1, ((self.k)**2)*self.D):
+            # test, change later to [1, D]
+            for d in range(1, ((self.k)**2)*self.D+1):
                 trued = fr(d, ((self.k)**2))
                 limit1 = trued**2
                 limit2 = (self.D - trued)**2
@@ -110,8 +111,8 @@ class Sheaf:
                             truec = fr(c, self.k)
                             truee = fr(e, (self.k)**3)
                             # Ranks
-                            rank1 = fr(-truec*(self.D - trued), 6*truee) - self.R
-                            rank2 = fr(truec*trued,6*truee)
+                            rank1 = fr(-truec*(self.D - trued), truee) - self.R
+                            rank2 = fr(truec*trued,truee)
                             solutions.append((rank1,rank2,truec,trued,truee))
         return solutions
 
@@ -133,7 +134,7 @@ class Sheaf:
 
 t1 = time.time()
 # Change the ones that have beta non zero if beta=0 works
-a = Sheaf(0,8,1, "Ab3")
+a = Sheaf(0,2,1, "Ab3")
 print(a.num_dest(1))
 t2 = time.time()
 total = t2-t1
