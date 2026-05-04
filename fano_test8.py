@@ -14,21 +14,21 @@ def verify2(tuple, beta, amb_sp):
     d = tuple[2]
     e = tuple[3]
     # Expressions
-    b = 2*beta*c*(r-1) + (c**2-d)  
-    c2 = (beta**3)*r*(r-1)*(r-2) + 3*(beta**2)*c*(r-1)*(r-2) + 3*beta*(r-2)*(c**2 - d) + 2*e + c**3 - 3*c*d
+    b = (beta**2)*r*(r-1)+ 2*beta*c*(r-1) + (c**2 - d)  
+    c2 = (beta**3)*r*(r**2 - r +2) + 3*(beta**2)*c*(r-1)*(r-2) + 3*beta*(r-2)*(c**2 - d) + 2*e + c**3 - 3*c*d
     # Fractions of the expressions above
     b2 = fr(b,2)
     c3 = fr(c2,6)
     if amb_sp=="P3":
-        a = (beta**3)*r + 3*(beta**2)*(c + 2*r) + 3*beta*(d + 4*c + fr(11,3)*r) + e + 6*d + 11*c 
+        a = (beta**3)*r + 3*(beta**2)*(c + 2*r) + 3*beta*(d + 2*c + fr(11,3)*r) + e + 6*d + 11*c 
     elif amb_sp=="Ab3":
         a = 6*e + 18*beta*d + 18*(beta**2)*c + 6*r*(beta**3)
     elif amb_sp=="Q3":
-        a = 2*(beta**3)*r + 6*(beta**2)*(c + fr(3,2)*r) + 6*beta*(d + 3*c + fr(13,6)*r) + 2*e + 9*d + 13*c
+        a = 2*(beta**3)*r + 3*(beta**2)*(2*c + 3*r) + beta*(6*d + 9*c + 13*r) + 2*e + 9*d + 13*c
     elif amb_sp=="V5":
-        a = 5*(beta**3)*r + 15*(beta**2)*(c + r) + 15*beta*(d + 2*c + fr(2,3)*r + fr(2,5)*r) + 5*e + 15*d + 16*c
+        a = 5*(beta**3)*r + 15*(beta**2)*(c + r) + beta*(15*d*(d + c) + 2*r*(5+3) ) + 5*e + 15*d + 10*c + 6*c
     elif amb_sp=="V22":
-        a = 22*(beta**3)*r + 66*(beta**2)*(c + fr(r,2)) + 66*beta*(d + c + fr(r,6) + fr(r,11)) + 22*e + 33*d + 23*c
+        a = 22*(beta**3)*r + 66*(beta**2)*(c + fr(1,2)*r) + 22*beta*(3*d + fr(3,2)*c + fr(1,2)*r + fr(12,22)*r) + 22*e + 33*d + 11*c + 12*c
     a2 = fr(a, 6)
     return in_ZZ(a2) and in_ZZ(b2) and in_ZZ(c3)
 
@@ -60,10 +60,11 @@ def grandverify(list,beta, amb_sp):
         r2 = math.floor(list[i][1])
         definitive = ([], list[i][2],list[i][3],list[i][4])
         wl = fr(list[i][4], list[i][2]) 
-        for j in range(r1, r2+1):
-            c=(j,list[i][2],list[i][3],list[i][4])
-            if verify2(c, beta, amb_sp):
-                definitive[0].append(j)
+        if wl>(0):
+            for j in range(r1, r2+1):
+                c=(j,list[i][2],list[i][3],list[i][4])
+                if verify2(c, beta, amb_sp):
+                    definitive[0].append(j)
         if len(definitive[0])>0:
             #walls.append(wl)
             granddefinitive.append(definitive)
@@ -87,7 +88,7 @@ class Sheaf:
     
     def possible_c6e(self):
         solutions = []
-        for d in range(1, ((self.k)**2)*self.D+1):
+        for d in range(1, ((self.k)**2)*self.D): #does not include D
             trued = fr(d, ((self.k)**2))
             limit1 = trued**2
             limit2 = (self.D - trued)**2
@@ -121,8 +122,10 @@ class Sheaf:
 
 t1 = time.time()
 # Change the ones that have beta non zero if beta=0 works
-a = Sheaf(0,2,-2, "Q3")
+a = Sheaf(1,2,1, "Ab3")
 print(a.num_dest(1))
 t2 = time.time()
 total = t2-t1
 print(str(datetime.timedelta(seconds=total)))
+
+### Verify for the beta non zero cases, probably there is an error??
