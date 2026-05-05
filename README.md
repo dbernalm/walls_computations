@@ -2,7 +2,7 @@ This is a algorithm to find the lambda walls for complexes in $D^b(X)$ ($X$ is a
 
 So far, the case $X=P^3$ and $X$ abelian have been completed successfully. A part of the program is concerned with Fano 3folds of Picard 1, but there is still some work missing.
 
-More specifically, if $A$ is a destabilizing object of $E$ with Chern character $ch^\beta = (-R, 0, D, 0)$ with $\beta= \frac{1}{k}$ or $0$ and $ch^\beta A = (r,c,d,e)$, then the algorithm computes all possibilities of such Chern character using the integral conditions (N $\beta$ 1), (N$\beta$2) and (N$\beta$3) and the numerical conditions (I$\beta$1), (I$\beta$2) and (I$\beta$3). In order to improve the speed for computing the cases $D=3$ with $\beta=\frac{1}{3}$ and $D=4$ with $\beta = \frac{1}{4}$, the algorithm relies on the multiprocessing package from Python, and thus the program would work better on a physical computer with at least 4 cores. 
+More specifically, if $A$ is a destabilizing object of $E$ with Chern character $ch^\beta = (-R, 0, D, 0)$ with $\beta= \frac{1}{k}$ or $0$ and $ch^\beta A = (r,c,d,e)$, then the algorithm computes all possibilities of such Chern character using the integral conditions (N $\beta$ 1), (N$\beta$2) and (N$\beta$3) and the numerical conditions (I$\beta$1), (I$\beta$2) and (I$\beta$3) which can be found in [arXiv:2511.13930](https://arxiv.org/abs/2511.13930). In order to improve the speed for computing the cases $D=3$ with $\beta=\frac{1}{3}$ and $D=4$ with $\beta = \frac{1}{4}$, the algorithm relies on the multiprocessing package from Python, and thus the program would work better on a physical computer with at least 4 cores. 
 
 In this case, we define an object by calling its class
 
