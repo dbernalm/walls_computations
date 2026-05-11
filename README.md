@@ -1,4 +1,4 @@
-This is a algorithm to find the lambda walls for complexes in $D^b(X)$ ($X$ is a 3fold of Picard 1) with Chern character $(-R,0,D,0)$. Those are cases of: instanton sheaves, shifts of ideal sheaves of curves (twisted by a certain number), and structure sheaves of one-dimensional curves.
+This is an algorithm to find the lambda walls for complexes in $D^b(X)$ ($X$ is a 3fold of Picard 1) with Chern character $(-R,0,D,0)$. Those are cases of: instanton sheaves, shifts of ideal sheaves of curves (twisted by a certain number), and structure sheaves of one-dimensional curves.
 
 So far, the case $X=P^3$ and $X$ abelian have been completed successfully. A part of the program is concerned with Fano 3folds of Picard 1, but there is still some work missing.
 
@@ -9,5 +9,5 @@ In this case, we define an object by calling its class
     a=Sheaf(R,D,k)
 where $\beta=\frac{1}{k}$. If $k=1$ then the program assumes $\beta=0$. After it you use the method 
 
-    a.num_dest(d)
-where the argument counts the number for which you want the process to be divided. This is used for the multiprocessing aspect, each process analyzes simultaneously $\frac{1}{d}$ of the list. The output is then a list of numbers of the form $\left([r_i]_{i=1}^l,c,d,e\right)$ where the $r_i$ are the possible ranks, and $c,d,e$ are the Chern characters of the destabilizing object generating the numerical wall.
+    a.num_dest(l)
+where the argument counts the number for which you want the process to be divided. This is used for the multiprocessing aspect, each process analyzes simultaneously $\frac{1}{l}$ of the list. The output is then a list of numbers of the form $\left([r_i]_{i=1}^k,c,d,e\right)$ where the $r_i$ are the possible ranks, and $c,d,e$ are the Chern characters of the destabilizing object generating the numerical wall.
